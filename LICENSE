@@ -1,0 +1,76 @@
+AstroMuninn Binary License
+--------------------------
+
+Copyright © 2026 Dean Ostergaard
+Published under the RavenSky Observatory project.
+All rights reserved.
+
+License Grant
+-------------
+AstroMuninn is licensed, not sold.
+
+You are granted permission to download and use the AstroMuninn software for your own personal, non-commercial use.
+You may install and run the software on your own computers and use it to organize and manage your astrophotography files.
+All rights not explicitly granted in this license remain with the author.
+
+Restrictions
+------------
+You may not:
+- Sell, rent, lease, sublicense, or otherwise distribute AstroMuninn for money or other compensation.
+- Include AstroMuninn as part of another software product, bundle, or service.
+- Offer AstroMuninn as part of a paid service or hosted platform.
+- Repackage or redistribute the software under another name.
+
+If you are interested in using AstroMuninn for commercial purposes, please open an issue on the project's GitHub repository to discuss licensing options.
+
+Redistribution
+--------------
+You may share a link to the official download location for AstroMuninn, but you may not redistribute the software itself.
+
+You may not redistribute modified versions of the software or host your own copies of the binaries without permission.
+
+Name and Branding
+-----------------
+The names AstroMuninn and RavenSky Observatory may not be used to promote, market, or distribute modified or repackaged versions of this software without permission.
+
+Data Safety
+-----------
+This software may move, rename, copy, or delete files as part of its normal operation.
+
+Always maintain backups of your data before using this software.
+
+No Warranty
+-----------
+This software is provided “AS IS”, without warranty of any kind.
+
+The author makes no guarantees that the software will work correctly, meet your needs, or be free of bugs.
+
+There is no guarantee that the software is suitable for any particular purpose.
+
+You use this software entirely at your own risk.
+
+Limitation of Liability
+-----------------------
+In no event shall the author or RavenSky Observatory be liable for any damages arising from the use of this software.
+
+This includes, but is not limited to:
+- loss of data
+- loss of profits
+- corruption of files
+- system damage
+- hardware damage
+- or any other direct or indirect damages
+even if the author has been advised that such damage might occur.
+
+Changes to the Software
+-----------------------
+The author may update, modify, or discontinue the software at any time without notice.
+There is no obligation to provide updates, support, or maintenance.
+
+Governing Law
+-------------
+This license shall be governed by the laws of the State of Maine, United States.
+
+Contact
+-------
+Questions about this license or requests for commercial use should be made through the GitHub Issues page for the project.
