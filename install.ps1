@@ -36,10 +36,48 @@ function Normalize-Version([string]$RequestedVersion) {
     return "v$RequestedVersion"
 }
 
+function Get-WindowsArchitecture {
+    $candidates = @()
+
+    try {
+        $runtimeArch = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture
+        if ($null -ne $runtimeArch) {
+            $runtimeArchText = $runtimeArch.ToString().Trim()
+            if (-not [string]::IsNullOrWhiteSpace($runtimeArchText)) {
+                $candidates += $runtimeArchText
+            }
+        }
+    }
+    catch {
+    }
+
+    foreach ($value in @($env:PROCESSOR_ARCHITEW6432, $env:PROCESSOR_ARCHITECTURE)) {
+        if (-not [string]::IsNullOrWhiteSpace($value)) {
+            $candidates += $value.Trim()
+        }
+    }
+
+    foreach ($candidate in ($candidates | Select-Object -Unique)) {
+        switch -Regex ($candidate.ToUpperInvariant()) {
+            '^(X64|AMD64)$' { return 'x86_64' }
+            '^ARM64$' { return 'arm64' }
+        }
+    }
+
+    $detected = if ($candidates.Count -gt 0) {
+        ($candidates | Select-Object -Unique) -join ', '
+    }
+    else {
+        'unknown'
+    }
+
+    Fail "Unable to determine the Windows architecture for this machine. Detected values: $detected"
+}
+
 function Get-AssetName([string]$ResolvedVersion) {
-    $arch = [System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture
+    $arch = Get-WindowsArchitecture
     switch ($arch) {
-        "X64" { return "$AppName-$ResolvedVersion-windows-x86_64.zip" }
+        "x86_64" { return "$AppName-$ResolvedVersion-windows-x86_64.zip" }
         default { Fail "$AppName currently supports only Windows x86_64." }
     }
 }
