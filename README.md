@@ -18,7 +18,7 @@ Source code is proprietary and not publicly available.
 
 **AstroMuninn** is a command-line tool for organizing astrophotography images into a structured, metadata-driven hierarchy.
 
-Designed for real observatory workflows, AstroMuninn extracts metadata directly from FITS and XISF files and organizes your imaging sessions by target, filter, date, and other attributes — automatically.
+Designed for real observatory workflows, AstroMuninn extracts metadata directly from FITS and XISF files and organizes your imaging sessions by target, filter, date, and other attributes automatically.
 
 **Let AstroMuninn remember.**
 
@@ -30,16 +30,16 @@ Astrophotography generates thousands of files across multiple nights, targets, f
 
 AstroMuninn helps you remember.
 
-It does not invent an organizational philosophy for you — unless the simple default hierarchy meets your needs. Instead, it gives you the tools to implement **your** strategy using metadata-driven organization and N.I.N.A.-compatible path templates.
+It does not invent an organizational philosophy for you unless the simple default hierarchy meets your needs. Instead, it gives you the tools to implement **your** strategy using metadata-driven organization and N.I.N.A.-compatible path templates.
 
-The result is a deterministic, repeatable folder structure built from the image file headers themselves — not from inconsistent filenames.
+The result is a deterministic, repeatable folder structure built from the image file headers themselves, not from inconsistent filenames.
 
 AstroMuninn:
 
 * Reads metadata directly from your image files
 * Understands FITS and XISF formats
 * Supports N.I.N.A. path templates
-* Handles real-world edge cases (e.g., telescope vs mount naming differences)
+* Handles real-world edge cases, for example telescope vs mount naming differences
 * Produces clean, consistent directory structures
 
 It is built on top of the open-source **ravensky-astro** Rust libraries.
@@ -67,7 +67,7 @@ Huginn thinks. Muninn remembers.
 * Dry-run mode for safe previews
 * **Monitor mode** for continuously ingesting newly written image files
 * Support for N.I.N.A. path templates
-* Automatic normalization of folder names (spaces → underscores)
+* Automatic normalization of folder names (spaces to underscores)
 * JSON configuration support
 * Pure Rust implementation
 
@@ -82,7 +82,7 @@ This is ideal for:
 * Network share ingestion
 * Observatory automation pipelines
 * Moving data from a capture workstation to long-term storage
-* Pairing with N.I.N.A.’s RoboCopy plugin
+* Pairing with N.I.N.A.'s RoboCopy plugin
 * Automatically relocating files from an ASIAIR export directory
 
 Instead of reorganizing after the fact, AstroMuninn can enforce structure in near real time.

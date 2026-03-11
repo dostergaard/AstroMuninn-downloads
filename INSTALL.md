@@ -19,11 +19,11 @@ irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/ins
 To install a specific release, pass a version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.sh | bash -s -- --version v0.9.1
+curl -fsSL https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.sh | bash -s -- --version v0.9.2
 ```
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.ps1))) -Version v0.9.1
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.ps1))) -Version v0.9.2
 ```
 
 ## macOS Apple Silicon
@@ -36,7 +36,7 @@ The shell installer:
 4. Installs `astromuninn` into `~/.local/bin` by default.
 5. Adds `~/.local/bin` to your shell PATH if needed.
 
-Because the installer uses `curl` instead of a browser download, it generally avoids the normal macOS browser quarantine friction. AstroMuninn is still unsigned and not notarized, so users should expect some residual trust friction in managed or locked-down environments.
+Because the installer uses `curl` instead of a browser download, it generally avoids the normal macOS browser quarantine friction. AstroMuninn is still unsigned and not notarized, so you should document that honestly for users.
 
 ## Windows x86_64
 
@@ -63,7 +63,7 @@ The shell installer:
 
 ## Homebrew
 
-This repository also acts as a custom Homebrew tap after the first public release:
+This repository also acts as a custom Homebrew tap:
 
 ```bash
 brew tap dostergaard/AstroMuninn-downloads https://github.com/dostergaard/AstroMuninn-downloads
@@ -72,7 +72,7 @@ brew install astromuninn
 
 The Homebrew formula is generated from the public release checksums and updated on each public release.
 
-## Verify The Archive
+## Verify the Archive
 
 Use the matching `SHA256SUMS.txt` file shipped with each release.
 

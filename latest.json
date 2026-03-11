@@ -1,0 +1,27 @@
+{
+  "tag": "v0.9.2",
+  "version": "0.9.2",
+  "repo": "dostergaard/AstroMuninn-downloads",
+  "generated_from_release": "v0.9.2",
+  "installers": {
+    "shell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.sh",
+    "powershell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.ps1"
+  },
+  "assets": {
+    "macos_apple_silicon": {
+      "name": "AstroMuninn-v0.9.2-macos-apple-silicon.tar.gz",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.9.2/AstroMuninn-v0.9.2-macos-apple-silicon.tar.gz",
+      "sha256": "950893c98164554c0e96cff4472dc598c7692bdf09505f4fa850bdc15817a045"
+    },
+    "linux_x86_64": {
+      "name": "AstroMuninn-v0.9.2-linux-x86_64.tar.gz",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.9.2/AstroMuninn-v0.9.2-linux-x86_64.tar.gz",
+      "sha256": "d8c3653d661c9756b8b707b7a4c0b51c4ddfdea5c891b95efccd5758848a1134"
+    },
+    "windows_x86_64": {
+      "name": "AstroMuninn-v0.9.2-windows-x86_64.zip",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.9.2/AstroMuninn-v0.9.2-windows-x86_64.zip",
+      "sha256": "89d53b283eb4f6c462e4564dbb9bbb72210d1cf7bbb9da3a630c9796953f98d7"
+    }
+  }
+}

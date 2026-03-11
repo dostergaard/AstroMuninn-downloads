@@ -92,13 +92,13 @@ This is particularly useful when:
 * Targets were renamed over time
 * Directory structures drifted
 
-### Recovering “Lost” Files
+### Recovering "Lost" Files
 
 AstroMuninn does not depend on filenames. If you have FITS or XISF files buried somewhere in a drive tree, it can locate them and place them correctly in your structured hierarchy.
 
 ---
 
-## Naming Standards & Conventions
+## Naming Standards And Conventions
 
 AstroMuninn builds folder structures from metadata embedded in your images. Consistent naming conventions produce better results.
 
@@ -109,7 +109,7 @@ For example, AstroMuninn cannot infer that:
 * `Andromeda Galaxy`
 * `M31`
 
-all refer to the same target — at least not yet.
+all refer to the same target, at least not yet.
 
 Likewise, different capture software populates metadata differently:
 
@@ -118,5 +118,3 @@ Likewise, different capture software populates metadata differently:
 * Other software may use different conventions.
 
 Understanding how your capture software writes metadata will help you design a predictable organization strategy.
-
----
