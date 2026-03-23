@@ -200,8 +200,8 @@ install_macos_app() {
   mkdir -p "$target_dir" "$metadata_dir"
 
   attach_output="$(hdiutil attach "$dmg_path" -nobrowse -readonly)"
-  mounted_device="$(printf '%s\n' "$attach_output" | awk '/^\/dev\// { device=$1 } END { print device }')"
-  mount_dir="$(printf '%s\n' "$attach_output" | awk '/\/Volumes\// { volume=$NF } END { print volume }')"
+  mounted_device="$(printf '%s\n' "$attach_output" | awk -F '\t' '/^\/dev\// { device=$1 } END { print device }')"
+  mount_dir="$(printf '%s\n' "$attach_output" | awk -F '\t' '/^\/dev\// { volume=$NF } END { print volume }')"
 
   [[ -n "$mounted_device" && -n "$mount_dir" ]] || fail "Unable to mount ${dmg_path}"
 
