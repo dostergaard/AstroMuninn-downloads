@@ -1,4 +1,11 @@
-# Usage
+# AstroMuninn CLI Usage
+
+This page covers the AstroMuninn CLI product.
+
+For the desktop app, see:
+
+- [lite/README.md](lite/README.md)
+- [lite/UserManual.md](lite/UserManual.md)
 
 ## Basic Usage
 

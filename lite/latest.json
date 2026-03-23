@@ -1,0 +1,29 @@
+{
+  "product": "lite",
+  "tag": "lite-v0.1.1",
+  "public_version_tag": "v0.1.1",
+  "version": "0.1.1",
+  "repo": "dostergaard/AstroMuninn-downloads",
+  "generated_from_release": "lite-v0.1.1",
+  "installers": {
+    "shell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/install.sh",
+    "powershell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/install.ps1"
+  },
+  "assets": {
+    "macos_apple_silicon": {
+      "name": "AstroMuninn-Lite-v0.1.1-macos-apple-silicon.dmg",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.1.1/AstroMuninn-Lite-v0.1.1-macos-apple-silicon.dmg",
+      "sha256": "be02a8f3b06263dc19d28cea5ac9c5993c0d26214ee73f8d9c60877d6496a60e"
+    },
+    "linux_x86_64": {
+      "name": "AstroMuninn-Lite-v0.1.1-linux-x86_64.AppImage",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.1.1/AstroMuninn-Lite-v0.1.1-linux-x86_64.AppImage",
+      "sha256": "c4c9bd96eab9598fc1148a83119e10bdeeb70b5df1327f67e8a101ace4fe60c6"
+    },
+    "windows_x86_64": {
+      "name": "AstroMuninn-Lite-v0.1.1-windows-x86_64-setup.exe",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.1.1/AstroMuninn-Lite-v0.1.1-windows-x86_64-setup.exe",
+      "sha256": "05ff54b31b30fa4383003b37b37496d8fd34bdbba2408e3d95383536bf756504"
+    }
+  }
+}

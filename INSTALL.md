@@ -1,6 +1,10 @@
-# Install AstroMuninn
+# Install AstroMuninn CLI
 
-AstroMuninn is distributed as prebuilt CLI archives.
+This page covers the AstroMuninn CLI product.
+
+For AstroMuninn Lite desktop installation, see:
+
+- [lite/INSTALL.md](lite/INSTALL.md)
 
 ## Recommended Commands
 
@@ -19,11 +23,11 @@ irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/ins
 To install a specific release, pass a version:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.sh | bash -s -- --version v0.9.2
+curl -fsSL https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.sh | bash -s -- --version vX.Y.Z
 ```
 
 ```powershell
-& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.ps1))) -Version v0.9.2
+& ([scriptblock]::Create((irm https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/install.ps1))) -Version vX.Y.Z
 ```
 
 ## macOS Apple Silicon
@@ -36,7 +40,10 @@ The shell installer:
 4. Installs `astromuninn` into `~/.local/bin` by default.
 5. Adds `~/.local/bin` to your shell PATH if needed.
 
-Because the installer uses `curl` instead of a browser download, it generally avoids the normal macOS browser quarantine friction. AstroMuninn is still unsigned and not notarized, so you should document that honestly for users.
+Because the installer uses `curl` instead of a browser download, it generally
+avoids the normal macOS browser quarantine friction that applies to desktop app
+downloads. AstroMuninn CLI is still unsigned, so you should document that
+honestly for users.
 
 ## Windows x86_64
 
