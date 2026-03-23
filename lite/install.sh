@@ -3,6 +3,7 @@
 set -euo pipefail
 
 APP_NAME="AstroMuninn Lite"
+APP_ASSET_PREFIX="AstroMuninn-Lite"
 DOWNLOADS_REPO="dostergaard/AstroMuninn-downloads"
 DOWNLOADS_BRANCH="main"
 LATEST_METADATA_URL="https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/latest.json"
@@ -42,7 +43,7 @@ detect_os_arch() {
       platform="macos"
       case "$arch" in
         arm64|aarch64)
-          asset_name="${APP_NAME}-VERSION-macos-apple-silicon.dmg"
+          asset_name="${APP_ASSET_PREFIX}-VERSION-macos-apple-silicon.dmg"
           default_install_dir="${HOME}/Applications"
           ;;
         *)
@@ -56,7 +57,7 @@ detect_os_arch() {
       platform="linux"
       case "$arch" in
         x86_64|amd64)
-          asset_name="${APP_NAME}-VERSION-linux-x86_64.AppImage"
+          asset_name="${APP_ASSET_PREFIX}-VERSION-linux-x86_64.AppImage"
           default_install_dir="${HOME}/.local/bin"
           ;;
         *)
