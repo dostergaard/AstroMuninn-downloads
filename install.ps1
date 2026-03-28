@@ -10,6 +10,7 @@ $ErrorActionPreference = "Stop"
 $AppName = "AstroMuninn"
 $ExeName = "astromuninn.exe"
 $DownloadsRepo = "dostergaard/AstroMuninn-downloads"
+$LatestMetadataUrl = "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/latest.json"
 $MetadataDir = "$env:LOCALAPPDATA\RavenSky\AstroMuninn"
 
 function Fail([string]$Message) {
@@ -17,11 +18,11 @@ function Fail([string]$Message) {
 }
 
 function Get-LatestVersion {
-    $release = Invoke-RestMethod -Uri "https://api.github.com/repos/$DownloadsRepo/releases/latest" -Headers @{ "User-Agent" = $AppName }
-    if (-not $release.tag_name) {
-        Fail "Unable to resolve the latest release from $DownloadsRepo."
+    $metadata = Invoke-RestMethod -Uri $LatestMetadataUrl -Headers @{ "User-Agent" = $AppName }
+    if (-not $metadata.tag) {
+        Fail "Unable to resolve the latest CLI release metadata from $LatestMetadataUrl."
     }
-    return $release.tag_name
+    return $metadata.tag
 }
 
 function Normalize-Version([string]$RequestedVersion) {
@@ -29,11 +30,23 @@ function Normalize-Version([string]$RequestedVersion) {
         return Get-LatestVersion
     }
 
-    if ($RequestedVersion.StartsWith("v")) {
+    if ($RequestedVersion.StartsWith("v") -or $RequestedVersion.StartsWith("cli-v")) {
         return $RequestedVersion
     }
 
     return "v$RequestedVersion"
+}
+
+function Get-PublicVersionTag([string]$ReleaseTag) {
+    if ($ReleaseTag.StartsWith("cli-v")) {
+        return "v" + $ReleaseTag.Substring(5)
+    }
+
+    if ($ReleaseTag.StartsWith("v")) {
+        return $ReleaseTag
+    }
+
+    Fail "Unsupported AstroMuninn CLI release tag: $ReleaseTag"
 }
 
 function Get-WindowsArchitecture {
@@ -137,7 +150,8 @@ if ($Uninstall) {
 }
 
 $ResolvedVersion = Normalize-Version -RequestedVersion $Version
-$AssetName = Get-AssetName -ResolvedVersion $ResolvedVersion
+$PublicVersionTag = Get-PublicVersionTag -ReleaseTag $ResolvedVersion
+$AssetName = Get-AssetName -ResolvedVersion $PublicVersionTag
 $ReleaseBase = "https://github.com/$DownloadsRepo/releases/download/$ResolvedVersion"
 $ArchiveUrl = "$ReleaseBase/$AssetName"
 $ChecksumUrl = "$ReleaseBase/SHA256SUMS.txt"
@@ -178,7 +192,8 @@ try {
     }
 
     Set-Content -Path (Join-Path $MetadataDir "install-info.txt") -Value @(
-        "version=$ResolvedVersion"
+        "version=$PublicVersionTag"
+        "release_tag=$ResolvedVersion"
         "installed_at=$(Get-Date -Format o)"
         "install_dir=$InstallDir"
         "downloads_repo=$DownloadsRepo"

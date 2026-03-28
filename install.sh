@@ -6,6 +6,7 @@ APP_NAME="AstroMuninn"
 BIN_NAME="astromuninn"
 DOWNLOADS_REPO="dostergaard/AstroMuninn-downloads"
 DOWNLOADS_BRANCH="main"
+LATEST_METADATA_URL="https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/latest.json"
 DEFAULT_INSTALL_DIR="${HOME}/.local/bin"
 DEFAULT_METADATA_DIR="${HOME}/.local/share/ravensky/astromuninn"
 
@@ -16,7 +17,7 @@ Install ${APP_NAME} from ${DOWNLOADS_REPO}.
 Usage: install.sh [options]
 
 Options:
-  --version <tag>       Install a specific version, for example v0.9.1
+  --version <tag>       Install a specific version, for example v0.9.1 or cli-v0.9.1
   --install-dir <dir>   Install the binary into this directory
   --no-modify-path      Do not update shell profile PATH entries
   --uninstall           Remove the installed binary and metadata
@@ -78,19 +79,27 @@ detect_hash_cmd() {
 }
 
 latest_release_tag() {
-  local latest_url
-  latest_url="$(curl -fsSLI -o /dev/null -w '%{url_effective}' "https://github.com/${DOWNLOADS_REPO}/releases/latest")"
-  version_tag="${latest_url##*/}"
-  if [[ "$version_tag" == "latest" || "$version_tag" == "releases" ]]; then
-    fail "No public release is available yet in ${DOWNLOADS_REPO}"
-  fi
-  [[ -n "$version_tag" ]] || fail "Unable to resolve the latest release from ${DOWNLOADS_REPO}"
+  local metadata_json
+  metadata_json="$(curl -fsSL "$LATEST_METADATA_URL" | tr -d '\n')"
+  version_tag="$(printf '%s' "$metadata_json" | sed -n 's/.*"tag"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p')"
+  [[ -n "$version_tag" ]] || fail "Unable to resolve the latest CLI release metadata from ${LATEST_METADATA_URL}"
+}
+
+release_tag_to_public_tag() {
+  local release_tag="$1"
+  case "$release_tag" in
+    cli-v*) printf 'v%s\n' "${release_tag#cli-v}" ;;
+    v*) printf '%s\n' "$release_tag" ;;
+    *)
+      fail "Unsupported AstroMuninn CLI release tag: $release_tag"
+      ;;
+  esac
 }
 
 normalize_version_tag() {
   if [[ -z "${version_tag:-}" ]]; then
     latest_release_tag
-  elif [[ "${version_tag}" != v* ]]; then
+  elif [[ "${version_tag}" != v* && "${version_tag}" != cli-v* ]]; then
     version_tag="v${version_tag}"
   fi
 }
@@ -219,8 +228,9 @@ if [[ "$uninstall" == "1" ]]; then
 fi
 
 normalize_version_tag
+public_version_tag="$(release_tag_to_public_tag "$version_tag")"
 detect_os_arch
-asset_name="${asset_name/VERSION/${version_tag}}"
+asset_name="${asset_name/VERSION/${public_version_tag}}"
 
 release_base="https://github.com/${DOWNLOADS_REPO}/releases/download/${version_tag}"
 archive_url="${release_base}/${asset_name}"
@@ -254,7 +264,8 @@ cp "$binary_path" "$install_path"
 chmod 0755 "$install_path"
 
 cat > "${metadata_dir}/install-info.txt" <<EOF
-version=${version_tag}
+version=${public_version_tag}
+release_tag=${version_tag}
 installed_at=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
 install_dir=${install_dir}
 downloads_repo=${DOWNLOADS_REPO}
