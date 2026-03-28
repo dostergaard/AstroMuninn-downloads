@@ -29,9 +29,12 @@ AstroMuninn Lite currently includes:
 - copy and move operation modes
 - scan and preview planning
 - tree, file list, and inspector workflow
+- user-resizable file-list columns
 - monitor mode for newly arriving files
 - template validation and template save/update
 - warning and error surfacing before execution
+- partial execution that skips file-specific blocking rows while leaving valid
+  files free to continue
 
 ## Documentation
 

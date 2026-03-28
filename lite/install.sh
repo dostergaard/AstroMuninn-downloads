@@ -16,7 +16,7 @@ Install ${APP_NAME} from ${DOWNLOADS_REPO}.
 Usage: install-lite.sh [options]
 
 Options:
-  --version <tag>       Install a specific version, for example lite-v0.1.1 or v0.1.1
+  --version <tag>       Install a specific version, for example lite-v0.2.0 or v0.2.0
   --install-dir <dir>   Install into this directory (default: ~/Applications on macOS, ~/.local/bin on Linux)
   --no-modify-path      Do not update shell profile PATH entries on Linux installs
   --uninstall           Remove the installed app or AppImage wrapper

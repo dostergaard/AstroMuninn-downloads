@@ -44,8 +44,10 @@ Lite is built for a review-first workflow:
 1. choose a source directory
 2. choose a destination directory
 3. scan the source and preview the planned result
-4. review warnings, errors, and resolved destination paths
-5. execute a copy or move when the plan looks correct
+4. review warnings, plan-wide blocking issues, file-specific errors, and
+   resolved destination paths
+5. execute a copy or move when the plan looks correct, knowing Lite can skip
+   file-specific blocking rows when valid files remain
 
 ## Supported Files
 
@@ -115,6 +117,8 @@ The action buttons are:
 - `Cancel`: stop the currently active scan, execute, or monitor task
 
 `Execute` is only available when there is a current valid scan plan.
+More specifically, the plan must still match the current form values, at least
+one file must remain processable, and no blocking plan-wide issues can remain.
 
 `Monitor` does not require a pre-scan plan and can start against an empty source
 folder.
@@ -159,6 +163,10 @@ It includes columns for:
 - `Status`
 
 Click a column header to sort the list.
+
+You can also drag the column dividers in the header to resize the list columns.
+Long values wrap within the resized column so you can keep `Status` and the
+other columns visible while reviewing a mixed set.
 
 ### Inspector
 
@@ -223,9 +231,21 @@ Typical things to check:
 - unexpected targets, dates, or camera values
 - unexpected destination paths
 
+Important phase-1 behavior:
+
+- file-specific metadata or destination-path errors do not necessarily disable
+  `Execute` if other files remain valid
+- blocking template or plan-wide feasibility issues still disable `Execute`
+- `Destination exists` is warning-only, but proceeding without changing the
+  plan will overwrite the existing destination file
+
 ### 6. Click Execute
 
 Click `Execute` when you are satisfied with the plan.
+
+If the current plan still contains one or more valid files, Lite executes those
+files and leaves file-specific blocking rows untouched. This phase does not yet
+offer an in-app routing action for those blocked files.
 
 During execution:
 
@@ -277,6 +297,10 @@ Warnings appear in more than one place:
 - tree warning marker
 - file status text in the file list
 
+Warnings do not necessarily block `Execute`. A destination-exists warning means
+the resolved destination file is already present, and continuing with the
+current plan will overwrite it.
+
 ### Errors
 
 Errors indicate that a file or template cannot be processed correctly with the
@@ -288,7 +312,12 @@ Typical errors include:
 - unreadable or corrupt metadata
 - a destination path that cannot be resolved from the available metadata
 
-Errors usually prevent `Execute` until the blocking problem is resolved.
+File-specific errors leave the affected rows unprocessable. If other valid
+files remain, `Execute` can still continue and will leave the errored files
+untouched.
+
+Plan-wide blocking issues, such as unsupported template tokens or insufficient
+destination space, still prevent `Execute` until the problem is resolved.
 
 ### Status Line
 
@@ -356,12 +385,14 @@ Possible reasons:
 - no valid scan has been run yet
 - the scan is out of date because you changed the source, destination, template,
   or operation mode
-- the current plan contains blocking errors
+- the current plan contains blocking plan-wide issues
+- the current plan no longer contains any executable files
 
 Fix:
 
 1. confirm source and destination
-2. resolve template or file errors
+2. resolve template or other blocking plan issues, or adjust the plan until at
+   least one file is executable
 3. run `Scan` again
 
 ### Monitor Starts But Nothing Appears
@@ -376,8 +407,9 @@ files to arrive and stabilize before processing them.
 AstroMuninn Lite found one or more files whose resolved destination path already
 exists.
 
-Review the affected rows and folders before executing. These warnings are meant
-to prevent accidental overwrites.
+Review the affected rows and folders before executing. `Execute` may still stay
+enabled if other files are processable, but proceeding with the current plan
+will overwrite the existing destination file.
 
 ### A File Shows Metadata Errors
 
@@ -389,6 +421,9 @@ The file may be:
 - missing enough required metadata that the destination path cannot be resolved
 
 Select the file and review the `Inspector` details.
+
+If other files in the scan remain valid, you can still execute the rest of the
+plan. Lite will leave the errored file untouched.
 
 ### The Template Is Rejected
 
@@ -402,6 +437,8 @@ Remove or replace unsupported tokens, then scan again.
 - Start with `Copy` if you are testing a new template.
 - Use `Scan` after any path, mode, or template change.
 - Review warnings before every execute pass.
+- Use the file-list column resize handles when long filenames crowd the
+  `Status` column.
 - Use `Monitor` for live capture or ingest folders that may start empty.
 - Use the inspector to confirm exactly how a file was interpreted before moving
   a large dataset.
