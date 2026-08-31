@@ -274,8 +274,10 @@ Monitor behavior:
 
 - the source folder may be empty when monitor starts
 - AstroMuninn Lite waits for files to become stable enough to process
-- if files already exist in the source directory, AstroMuninn Lite will
- immediately process those files then wait for new files to arrive
+- the source tree is checked at most once every 10 seconds so monitoring does
+  not compete heavily with active file copies
+- files already in the source directory are processed after they pass the same
+  stability checks as newly arriving files
 - the tree and file list populate as new files are discovered and organized
 - `Cancel` stops the active monitor session
 - you can restart monitor later against the same folders
