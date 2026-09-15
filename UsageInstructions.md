@@ -25,7 +25,21 @@ astromuninn --source /path/to/images --destination /path/to/organized --dry-run
 ```bash
 # Monitor a live capture directory until stopped (Ctrl-C)
 astromuninn --monitor /path/to/live/capture --destination /path/to/organized
+
+# Preview monitor decisions without copying or moving files
+astromuninn --monitor /path/to/live/capture --destination /path/to/organized --dry-run
 ```
+
+Monitor mode includes supported files already present at startup and new FITS or
+XISF arrivals. Files must remain unchanged for the configured quiet period and
+pass read-only validation before organization. Structural validation is the
+default; full payload/checksum validation is optional in `config.json`.
+
+`Ctrl+C` closes admission of new work and cooperatively cancels validation. A
+Copy or Move already in progress may settle safely before cancellation completes.
+If a genuinely unavailable/full destination aborts the session, correct or
+reselect the destination and start a new monitor session. Ordinary missing
+directories may be recreated by the normal workflow.
 
 ---
 
@@ -33,14 +47,16 @@ astromuninn --monitor /path/to/live/capture --destination /path/to/organized
 
 ```
 Options:
-  -s, --source <SOURCE_DIR>       Source directory containing astrophotography images
-      --monitor <MONITOR_DIR>     Monitor directory for new astrophotography files
-  -d, --destination <DEST_DIR>    Destination directory for organized images
-  -c, --copy                      Copy files instead of moving them
-  -n, --dry-run                   Don't actually move/copy files (preview only)
-  -p, --nina-path <TEMPLATE>      Use NINA path template for organizing files
-  -q, --silent                    Run silently (no output except errors)
-  -f, --config <CONFIG_FILE>      Path to configuration file
+  -s, --source <SOURCE>            Source directory containing astrophotography images
+      --monitor <MONITOR_DIR>      Monitor a directory continuously and process new files as they appear
+  -d, --destination <DESTINATION>  Destination directory for organized images
+  -c, --copy                       Copy files instead of moving them
+  -n, --dry-run                    Dry run (don't actually move/copy files)
+  -p, --nina-path <NINA_PATH>      Use NINA path template for organizing files
+  -q, --silent                     Run silently (no output except errors)
+  -f, --config <CONFIG>            Path to configuration file (default: ~/.config/astromuninn/config.json)
+  -h, --help                       Print help
+  -V, --version                    Print version
 ```
 
 Notes:
@@ -68,9 +84,43 @@ Example configuration:
     "secondary_group": "Date",
     "tertiary_group": "Filter"
   },
-  "nina_path_template": "$TARGETNAME$\\$DATE$\\$FILTER$"
+  "nina_path_template": "$$TARGETNAME$$\\$$DATE$$\\$$FILTER$$",
+  "monitor": {
+    "poll_interval_seconds": 10,
+    "quiet_period_seconds": 5,
+    "validation_timeout_seconds": 300,
+    "full_validation": false,
+    "validation_limits": {
+      "max_header_bytes": 67108864,
+      "max_working_bytes": 268435456,
+      "max_structures": 100000,
+      "max_decoded_bytes": 68719476736
+    },
+    "resources": {
+      "mode": "auto",
+      "max_working_bytes": 268435456,
+      "max_worker_threads": null,
+      "max_in_flight_files": null,
+      "max_readers_per_volume": null,
+      "max_writers_per_volume": null,
+      "max_queued_files": null
+    }
+  }
 }
 ```
+
+Missing monitor fields use backward-compatible defaults. With automatic caps,
+the finite fallbacks are at most 4 workers, equal in-flight capacity, 2 readers
+and 1 writer per observed volume, active/queue capacity 128, and 256 MiB of
+aggregate managed memory. If CPU availability cannot be observed, the worker
+fallback is 2. These are conservative defaults, not universal hardware
+recommendations. Active scheduling state is bounded separately from handled
+history, so a session can process far more than 128 files. Config changes are
+snapshotted when a monitor starts and take effect after starting a new session.
+
+The validated release baseline uses local storage. NAS/SMB, disconnected
+removable storage, real disk-full behavior, and every Windows storage topology
+have not received manual acceptance.
 
 ---
 

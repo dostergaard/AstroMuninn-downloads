@@ -1,6 +1,6 @@
 # AstroMuninn Lite User Manual
 
-Welcome to AstroMuninn Lite, the free for personal use GUI version of the AstroMuninn command line astrophotography image organization tool.
+Welcome to AstroMuninn Lite 0.3.0, the free for personal use GUI version of the AstroMuninn command line astrophotography image organization tool.
 
 ## Why AstroMuninn?
 
@@ -273,14 +273,32 @@ Recommended monitor workflow:
 Monitor behavior:
 
 - the source folder may be empty when monitor starts
-- AstroMuninn Lite waits for files to become stable enough to process
-- the source tree is checked at most once every 10 seconds so monitoring does
-  not compete heavily with active file copies
 - files already in the source directory are processed after they pass the same
   stability checks as newly arriving files
+- each file must keep the same size and modification time for at least the
+  configured quiet period; the default is five seconds
+- the source tree is checked after a default ten-second wait following each
+  completed discovery pass, so the next pass normally confirms the quiet period
+- read-only structural FITS/XISF validation occurs before metadata/path planning
+  and organization; it does not edit the image file
+- optional full validation reads supported payloads, decompresses where needed,
+  and verifies supported checksums that are present
+- one incomplete or invalid unchanged file can be retried for up to the
+  configured timeout without preventing other ready files from progressing
 - the tree and file list populate as new files are discovered and organized
-- `Cancel` stops the active monitor session
-- you can restart monitor later against the same folders
+- `Copy` keeps the source; `Move` removes it only after the move succeeds
+- `Cancel` stops admission of new work and requests cooperative validation
+  cancellation; an already-started Copy/Move may finish at its safe operation
+  boundary before the session reports cancellation complete
+- completed-after-cancellation work is accounted for in the final session state
+- after cancellation completes, you can restart monitor against the same folders
+
+If a genuinely unavailable or full destination causes a terminal failure, Lite
+stops the monitor session and preserves files that did not safely complete.
+Correct or reselect the destination and start a new session; Lite does not
+automatically resume an aborted session. An ordinary missing destination
+directory may be recreated where the normal organization workflow permits it,
+so renaming a local directory does not necessarily create a destination failure.
 
 ## Warnings, Errors, And Status
 
@@ -363,6 +381,35 @@ At this stage, Lite directly updates the saved N.I.N.A.-style path template
 through the `Update Config` button. Other shared configuration behavior follows
 the core AstroMuninn configuration system.
 
+Monitor settings remain manually editable in `config.json`; Lite does not yet
+provide a monitor settings editor. The default settings wait ten seconds between
+completed discovery passes, require five seconds without a size/mtime change,
+allow five minutes for validation retries on an unchanged file, and request
+structural validation. Set `monitor.full_validation` to `true` for supported full
+payload/checksum validation, which can require more I/O and CPU. Missing monitor
+settings use defaults, and Lite preserves them when the path template is saved.
+Restart monitoring after editing the file so the next session reloads it.
+
+Each monitor session uses a snapshot of the organization, validation, and
+resource settings taken when it starts. Editing `config.json` does not change a
+running session; cancel or stop it and start a new session to apply the edit.
+
+With resource fields left `null`, automatic mode uses conservative finite
+fallbacks:
+
+- worker ceiling: 4
+- in-flight files: equal to the worker count
+- readers per observed volume: 2
+- writers per observed volume: 1
+- active/queue capacity: 128
+- aggregate managed memory: 256 MiB
+- worker fallback when CPU availability cannot be observed: 2
+
+These defaults are safety-oriented release settings, not recommendations for
+every machine or storage device. Explicit resource caps must be positive.
+Active scheduling state is bounded, while handled-version history is kept
+separately, so a monitor session may process far more than 128 total files.
+
 ## What Lite Intentionally Does Not Include
 
 AstroMuninn Lite is intentionally limited to the current Lite scope.
@@ -404,6 +451,21 @@ This is normal if the source folder is empty.
 While monitor is active, AstroMuninn Lite waits for newly written FITS or XISF
 files to arrive and stabilize before processing them.
 
+The default discovery cadence means a newly observed file will not normally be
+processed immediately. It must first remain unchanged through the quiet period
+and then pass validation.
+
+### Monitor Stops For A Destination Error
+
+A genuinely unavailable or full destination can abort the whole monitor session
+to prioritize source preservation. Correct or reselect the destination, confirm
+that it is writable and has sufficient free space, and click `Monitor` to start
+a new session. Lite does not automatically resume the aborted session.
+
+If only a normal destination subdirectory is missing, AstroMuninn may recreate
+it and continue; renaming a local directory is therefore not a reliable way to
+simulate loss of a destination filesystem.
+
 ### Destination Exists Warnings Appear
 
 AstroMuninn Lite found one or more files whose resolved destination path already
@@ -444,6 +506,20 @@ Remove or replace unsupported tokens, then scan again.
 - Use `Monitor` for live capture or ingest folders that may start empty.
 - Use the inspector to confirm exactly how a file was interpreted before moving
   a large dataset.
+
+## Current Evidence Limits
+
+The release has Windows 11 Pro x86-64 manual acceptance for installation,
+launch, local source/destination selection, real FITS/XISF files, Copy, Move,
+cancellation, restart, UI responsiveness, and data integrity. Native CI also
+covers the documented Linux, Windows, and macOS build targets.
+
+Manual acceptance did not cover NAS/SMB, disconnected removable storage, a real
+disk-full destination, or every unavailable-destination topology. Detailed
+performance/resource measurements primarily came from one Apple M4 Max and its
+recorded local storage setup, so they should not be generalized to every system.
+Structural validation lowers the risk of processing an incomplete file but
+cannot prove that another program will never resume writing afterward.
 
 ## Related Documents
 

@@ -36,6 +36,19 @@ AstroMuninn Lite currently includes:
 - partial execution that skips file-specific blocking rows while leaving valid
   files free to continue
 
+Monitor mode also handles supported files present at startup. It waits for an
+elapsed quiet period and performs read-only structural validation by default;
+optional full validation and finite resource caps are configured in the shared
+`config.json`. Cancelling stops admission of new work, while an already-started
+Copy/Move may settle safely before the session returns to idle. After a terminal
+unavailable/full destination error, correct the destination and start a new
+session; an ordinary missing directory may instead be recreated.
+
+Windows 11 Pro x86-64 manual acceptance covers the installer, launch, local
+folder selection, FITS/XISF, Copy, Move, cancellation, restart, responsiveness,
+and data integrity. NAS/SMB, disconnected removable storage, real disk-full
+behavior, and every Windows storage topology remain unverified.
+
 ## Documentation
 
 - [Lite install guide](INSTALL.md)

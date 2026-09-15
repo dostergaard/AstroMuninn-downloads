@@ -1,20 +1,20 @@
 class Astromuninn < Formula
   desc "AstroMuninn CLI for organizing astrophotography data"
   homepage "https://github.com/dostergaard/AstroMuninn-downloads"
-  version "0.9.2"
+  version "0.10.0"
   license :cannot_represent
 
   on_macos do
     on_arm do
-      url "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.9.2/AstroMuninn-v0.9.2-macos-apple-silicon.tar.gz"
-      sha256 "950893c98164554c0e96cff4472dc598c7692bdf09505f4fa850bdc15817a045"
+      url "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.10.0/AstroMuninn-CLI-v0.10.0-macos-apple-silicon.tar.gz"
+      sha256 "8abdcbe942ee4a8fe9241283f0f9d82305b98361185693920ae205b1d9a5a709"
     end
   end
 
   on_linux do
     on_intel do
-      url "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.9.2/AstroMuninn-v0.9.2-linux-x86_64.tar.gz"
-      sha256 "d8c3653d661c9756b8b707b7a4c0b51c4ddfdea5c891b95efccd5758848a1134"
+      url "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/v0.10.0/AstroMuninn-CLI-v0.10.0-linux-x86_64.tar.gz"
+      sha256 "b8322df39710302e929cfec3608cc070fd2d681ad4830158cb124855574f5787"
     end
   end
 
