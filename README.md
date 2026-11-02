@@ -69,6 +69,7 @@ Lite documentation:
 - [Lite overview](lite/README.md)
 - [Lite install guide](lite/INSTALL.md)
 - [Lite user manual](lite/UserManual.md)
+- [Configuration Editor guide](lite/LiteConfigurationEditor.md)
 - [Lite metadata feed](https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/latest.json)
 
 Important note:

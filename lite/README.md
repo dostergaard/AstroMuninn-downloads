@@ -32,9 +32,15 @@ AstroMuninn Lite currently includes:
 - user-resizable file-list columns
 - monitor mode for newly arriving files
 - template validation and template save/update
+- a Configuration editor for paths, monitor settings, performance limits, and
+  stored image-type presets
 - warning and error surfacing before execution
 - partial execution that skips file-specific blocking rows while leaving valid
   files free to continue
+
+FITS support includes tiled-compressed `.fits.fz`, `.fit.fz`, and `.fts.fz`
+files. The underlying metadata comes from the logical image HDU. Stored
+image-type presets do not yet change destination routing.
 
 Monitor mode also handles supported files present at startup. It waits for an
 elapsed quiet period and performs read-only structural validation by default;
@@ -44,15 +50,18 @@ Copy/Move may settle safely before the session returns to idle. After a terminal
 unavailable/full destination error, correct the destination and start a new
 session; an ordinary missing directory may instead be recreated.
 
-Windows 11 Pro x86-64 manual acceptance covers the installer, launch, local
-folder selection, FITS/XISF, Copy, Move, cancellation, restart, responsiveness,
+The preceding release's Windows 11 Pro x86-64 manual acceptance covered the
+installer, launch, local folder selection, FITS/XISF, Copy, Move, cancellation,
+restart, responsiveness,
 and data integrity. NAS/SMB, disconnected removable storage, real disk-full
-behavior, and every Windows storage topology remain unverified.
+behavior, every Windows storage topology, and installed Windows/Linux editor
+interactions remain unverified.
 
 ## Documentation
 
 - [Lite install guide](INSTALL.md)
 - [Lite user manual](UserManual.md)
+- [Configuration Editor guide](LiteConfigurationEditor.md)
 
 ## Release Artifacts
 

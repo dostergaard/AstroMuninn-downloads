@@ -34,6 +34,10 @@ Monitor mode includes supported files already present at startup and new FITS or
 XISF arrivals. Files must remain unchanged for the configured quiet period and
 pass read-only validation before organization. Structural validation is the
 default; full payload/checksum validation is optional in `config.json`.
+Supported FITS suffixes include `.fits`, `.fit`, `.fts`, and their tiled-compressed
+`.fz` forms (`.fits.fz`, `.fit.fz`, `.fts.fz`). Whole-file `.gz` is not a
+supported suffix. Compressed FITS observation metadata uses the logical image
+HDU supplied by RavenSky Astro 0.6.2.
 
 `Ctrl+C` closes admission of new work and cooperatively cancels validation. A
 Copy or Move already in progress may settle safely before cancellation completes.
@@ -84,7 +88,7 @@ Example configuration:
     "secondary_group": "Date",
     "tertiary_group": "Filter"
   },
-  "nina_path_template": "$$TARGETNAME$$\\$$DATE$$\\$$FILTER$$",
+  "default_path_template": "$$TARGETNAME$$\\$$DATE$$\\$$FILTER$$",
   "monitor": {
     "poll_interval_seconds": 10,
     "quiet_period_seconds": 5,
@@ -117,6 +121,10 @@ fallback is 2. These are conservative defaults, not universal hardware
 recommendations. Active scheduling state is bounded separately from handled
 history, so a session can process far more than 128 files. Config changes are
 snapshotted when a monitor starts and take effect after starting a new session.
+Existing `nina_path_template` values still load; saving the configuration writes
+the canonical `default_path_template` key. Do not specify both keys. The Lite
+desktop app provides a Configuration editor for shared settings; see its
+[user manual](lite/UserManual.md) and [Configuration Editor guide](lite/LiteConfigurationEditor.md).
 
 The validated release baseline uses local storage. NAS/SMB, disconnected
 removable storage, real disk-full behavior, and every Windows storage topology

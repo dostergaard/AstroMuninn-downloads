@@ -1,6 +1,14 @@
 # AstroMuninn Lite User Manual
 
-Welcome to AstroMuninn Lite 0.3.0, the free for personal use GUI version of the AstroMuninn command line astrophotography image organization tool.
+Welcome to AstroMuninn Lite 0.4.0, the free for personal use GUI version of the AstroMuninn command line astrophotography image organization tool.
+
+## Configuration Editor
+
+Use **Configuration** to edit Paths, Performance, Monitor and stored Image Type
+Presets. Apply/OK saves while idle; Cancel discards unapplied changes. Benchmarks
+require explicit confirmation, and image-type mappings do not yet select output
+templates. See the [Configuration Editor guide](LiteConfigurationEditor.md) for
+field meanings, migration, benchmark limits and discovery behavior.
 
 ## Why AstroMuninn?
 
@@ -53,10 +61,12 @@ Lite is built for a review-first workflow:
 
 AstroMuninn Lite currently supports:
 
-- FITS files: `.fits`, `.fit`, `.fts`
+- FITS files: `.fits`, `.fit`, `.fts`, `.fits.fz`, `.fit.fz`, `.fts.fz`
 - XISF files: `.xisf`
 
 Unsupported files are ignored during scan and monitor operations.
+The `.fz` suffix denotes FITS tiled-image compression. Whole-file `.gz`
+compression is a different format and is not included in these suffixes.
 
 ## Before You Start
 
@@ -130,6 +140,8 @@ destination hierarchy.
 
 Use `Update Config` to save the current template back to the shared AstroMuninn
 configuration.
+Use **Configuration** for the full editor, including saved paths, monitor and
+performance settings, and image-type presets.
 
 Important notes:
 
@@ -238,6 +250,8 @@ Important phase-1 behavior:
 - blocking template or plan-wide feasibility issues still disable `Execute`
 - `Destination exists` is warning-only, but proceeding without changing the
   plan will overwrite the existing destination file
+- a destination that escapes the selected root, including through an existing
+  symlink, appears as an unresolvable destination and is skipped
 
 ### 6. Click Execute
 
@@ -331,6 +345,7 @@ Typical errors include:
 - unsupported template token
 - unreadable or corrupt metadata
 - a destination path that cannot be resolved from the available metadata
+- a destination that leaves the selected destination root
 
 File-specific errors leave the affected rows unprocessable. If other valid
 files remain, `Execute` can still continue and will leave the errored files
@@ -338,6 +353,9 @@ untouched.
 
 Plan-wide blocking issues, such as unsupported template tokens or insufficient
 destination space, still prevent `Execute` until the problem is resolved.
+
+Scan cancellation is checked before each metadata read starts. A metadata read
+already in progress may finish before the scan returns to idle.
 
 ### Status Line
 
@@ -377,18 +395,18 @@ Config file locations based on platform:
 - Windows: `%APPDATA%\astromuninn\config.json`
 - Windows typical expanded path: `C:\Users\<username>\AppData\Roaming\astromuninn\config.json`
 
-At this stage, Lite directly updates the saved N.I.N.A.-style path template
-through the `Update Config` button. Other shared configuration behavior follows
-the core AstroMuninn configuration system.
-
-Monitor settings remain manually editable in `config.json`; Lite does not yet
-provide a monitor settings editor. The default settings wait ten seconds between
+The `Update Config` button saves the main-window template. **Configuration**
+opens the full editor. Apply and OK save the current draft only while processing
+is idle; Cancel discards unapplied edits. The editor can change monitor settings,
+performance limits, default paths, and stored image-type presets. Presets do not
+yet select output templates. The default monitor settings wait ten seconds between
 completed discovery passes, require five seconds without a size/mtime change,
 allow five minutes for validation retries on an unchanged file, and request
 structural validation. Set `monitor.full_validation` to `true` for supported full
 payload/checksum validation, which can require more I/O and CPU. Missing monitor
-settings use defaults, and Lite preserves them when the path template is saved.
-Restart monitoring after editing the file so the next session reloads it.
+settings use defaults. Restart monitoring after editing the file so the next
+session reloads it. See the [Configuration Editor guide](LiteConfigurationEditor.md)
+for field meanings, migration, benchmarking, and discovery behavior.
 
 Each monitor session uses a snapshot of the organization, validation, and
 resource settings taken when it starts. Editing `config.json` does not change a
@@ -509,10 +527,13 @@ Remove or replace unsupported tokens, then scan again.
 
 ## Current Evidence Limits
 
-The release has Windows 11 Pro x86-64 manual acceptance for installation,
+The preceding release had Windows 11 Pro x86-64 manual acceptance for installation,
 launch, local source/destination selection, real FITS/XISF files, Copy, Move,
 cancellation, restart, UI responsiveness, and data integrity. Native CI also
 covers the documented Linux, Windows, and macOS build targets.
+The new Configuration editor has local backend tests and a mocked WebKit UI
+check; installed Windows and Linux editor interactions have not yet received
+the same manual acceptance.
 
 Manual acceptance did not cover NAS/SMB, disconnected removable storage, a real
 disk-full destination, or every unavailable-destination topology. Detailed
