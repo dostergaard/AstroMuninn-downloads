@@ -1,29 +1,29 @@
 {
   "product": "lite",
-  "tag": "lite-v0.3.0",
-  "public_version_tag": "v0.3.0",
-  "version": "0.3.0",
+  "tag": "lite-v0.4.0",
+  "public_version_tag": "v0.4.0",
+  "version": "0.4.0",
   "repo": "dostergaard/AstroMuninn-downloads",
-  "generated_from_release": "lite-v0.3.0",
+  "generated_from_release": "lite-v0.4.0",
   "installers": {
     "shell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/install.sh",
     "powershell": "https://raw.githubusercontent.com/dostergaard/AstroMuninn-downloads/main/lite/install.ps1"
   },
   "assets": {
     "macos_apple_silicon": {
-      "name": "AstroMuninn-Lite-v0.3.0-macos-apple-silicon.dmg",
-      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.3.0/AstroMuninn-Lite-v0.3.0-macos-apple-silicon.dmg",
-      "sha256": "87c477fad3589e50af0cde487b18d5604471df660c1de3c667c05c88e8dcfc76"
+      "name": "AstroMuninn-Lite-v0.4.0-macos-apple-silicon.dmg",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.4.0/AstroMuninn-Lite-v0.4.0-macos-apple-silicon.dmg",
+      "sha256": "a3eb71e69f315d5d0eb98d0d6563d059533879dc92bc570ad473a6d12776cb23"
     },
     "linux_x86_64": {
-      "name": "AstroMuninn-Lite-v0.3.0-linux-x86_64.AppImage",
-      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.3.0/AstroMuninn-Lite-v0.3.0-linux-x86_64.AppImage",
-      "sha256": "088f045dffe026e96a77a4619c8e225bda18a2467992e187d298bba4fe74cd96"
+      "name": "AstroMuninn-Lite-v0.4.0-linux-x86_64.AppImage",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.4.0/AstroMuninn-Lite-v0.4.0-linux-x86_64.AppImage",
+      "sha256": "8872749bf80a875f4d5c974f5437424afdffe062a59a74cfa76548a140b491ba"
     },
     "windows_x86_64": {
-      "name": "AstroMuninn-Lite-v0.3.0-windows-x86_64-setup.exe",
-      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.3.0/AstroMuninn-Lite-v0.3.0-windows-x86_64-setup.exe",
-      "sha256": "95adcf824f8aad8853be4c463c9b6217fcab101e1c6a05a4bfa8f4a0bf8b6b6b"
+      "name": "AstroMuninn-Lite-v0.4.0-windows-x86_64-setup.exe",
+      "url": "https://github.com/dostergaard/AstroMuninn-downloads/releases/download/lite-v0.4.0/AstroMuninn-Lite-v0.4.0-windows-x86_64-setup.exe",
+      "sha256": "14b7ddbf5f0d96aebc057149bb25977517616ca0be4a8556880dfe3a59160abf"
     }
   }
 }
